@@ -111,8 +111,9 @@
         else if ($action=="boxnull") 
             { 
                         $id=0;
+                        $id_ltu=0;
                         $a=$_GET['action'];
-                        $box=commbox_get($link, $id);
+                        $box=commbox_get($link, $id, $id_ltu);
                         include("../views/output_commbox.php");
                     }
         
@@ -126,11 +127,12 @@
                         }
                             else 
                             {
+                                
                                 $id=(int)$_GET['id'];
+                                $box=commbox_getw($link, $id);
                                 if(!empty($_POST) && $id>0) 
                                 {
                                     if (empty($_POST['id_monter'])) { 
-                                        $box=commbox_getw($link, $_GET['id']);
                                         $_POST['id_monter']=$box['id_monter'];
                                     }
                                     if (empty($_POST['id_ltu'])) 
@@ -148,6 +150,26 @@
                        
                         } 
         }
+
+        else if ($action=="boxclear") 
+            {
+                    
+                    if (!isset($_GET['id']) or empty($_GET['id'])) 
+                        {
+                            $monters=monters($link);
+                            $ltu=ltu($link); 
+                            include("views/box_admin.php");   
+                        }
+                            else 
+                            {
+                                
+                                    $id=(int)$_GET['id'];                                
+                                    $b=box_clear($link, $id);
+                                    header ("Location:index.php?action=boxedit&id=$id ");
+                                    }
+                       
+                        } 
+        
                       
      else
         
