@@ -1,3 +1,4 @@
+<<<<<<< 83053ec6ff6679d510ec54d45d976f8cde8beaa3
 <?php 
     require_once ("databases.php");
     require_once ("session.php");
@@ -12,4 +13,12 @@
     }else $admin="";
     $login_users=login_users_count($link);
     include("views/info.php"); 
+=======
+<?php
+$a="Hello World";
+print_r($a);
+$b="Everybody";
+echo $b;
+echo "Goodbye";
+>>>>>>> a5e30ebc6540c28a517d1a119a003673970842c5
 ?>
