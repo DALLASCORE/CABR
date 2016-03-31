@@ -20,5 +20,9 @@ print_r($a);
 $b="Everybody";
 echo $b;
 echo "Goodbye";
+<<<<<<< c09821038f35f1b23522dbd89a3eb244234c8e18
 >>>>>>> a5e30ebc6540c28a517d1a119a003673970842c5
+=======
+echo "kon";
+>>>>>>> 2d6700526895c5b459839766899a4ae9e611954a
 ?>
