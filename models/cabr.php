@@ -71,7 +71,7 @@ function monter_get($link, $id){
     if (!$result) die (mysqli_error($link));
     
     //Извлечение из базы данных
-   
+       
         $row=mysqli_fetch_assoc($result);
         $monter=$row;
 
@@ -103,7 +103,7 @@ where commbox.id=%d",(int)$id);
 }
 function commbox_get($link, $id_monter, $id_ltu){
     //Запрос
-    $query=sprintf("SELECT commbox.id, number, address, type, note, firstname, phone, ltunum FROM `commbox` 
+    $query=sprintf("SELECT commbox.id, name_lost, number, address, type, note, firstname, phone, ltunum FROM `commbox` 
     left join `info_cabr` on commbox.id_monter=info_cabr.id
     left join `ltu` on commbox.id_ltu=ltu.id 
     WHERE commbox.id_ltu='%d' or commbox.id_monter='%d'", (int)$id_ltu, (int)$id_monter);
@@ -314,9 +314,10 @@ function monter_new($link, $firstname, $secondname, $operator, $phone,  $id_ltu)
     }else $b="Недопустимое значение Имени или Фамилии";
     return $b;
 }
-function monter_delete($link, $id){
+function monter_delete($link, $id, $firstname){
         $id=(int)$id;
-        $q="UPDATE `commbox` SET `id_monter` = '' WHERE `commbox`.`id_monter` = '$id' ";
+        $firstname = mysqli_real_escape_string($link, $firstname);
+        $q="UPDATE `commbox` SET `id_monter` = '', `name_lost`='$firstname' WHERE `commbox`.`id_monter` = '$id' ";
         $query="DELETE FROM `info_cabr` WHERE id='$id'";
         $result=mysqli_query($link, $q);
         if (!$result) die(mysqli_error($link));
