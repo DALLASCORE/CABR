@@ -42,14 +42,17 @@
 
         else if ($action=="monterdel") 
             {
+            
             $monters=monters($link);
             include("../views/ltumonter.php");
                 
                 if (isset($_GET['id'])) 
                     {
+                        $monter=monter_get($link, $_GET['id']);
                         $a=$_GET['action'];
-                        monter_delete($link, $_GET['id']);
+                        monter_delete($link, $_GET['id'], $monter['firstname']);
                         exit("<meta http-equiv='refresh' content='0; url= $_SERVER[PHP_SELF]?action=$a'>");
+                        
                     }
                 
             }
