@@ -28,6 +28,7 @@
                         <th>Примечание</th>
                         <th>Монтер</th>
                         <th>телефон</th>
+                        <th>Был</th>
                         <th>удалить</th>
                         <th>Редактировать</th>
                         
@@ -38,9 +39,10 @@
                     <td><?=$a['ltunum']?></td>
                     <td><?=$a['type']?></td>
                     <td><?=$a['address']?></td>
-                     <td><?=$a['note']?></td>
+                    <td><?=$a['note']?></td>
                     <td><?=$a['firstname']?>  <?=$a['secondname']?></td>
                     <td><?=$a['phone'] ?></td>
+                    <td><?=$a['name_lost'] ?></td>
                     <td><a href="index.php?action=boxdel&id=<?php echo $a['id']; ?>">delete</td>
                     <td><a href="index.php?action=boxedit&id=<?php echo $a['id']; ?>">edit</td>
                 </tr>
