@@ -18,6 +18,8 @@
             <input type="button" onclick="history.back(-1);" value="Назад"/>
                  </form>
         <div>
+           
+            
             <form name="box" method="post" action="index.php?action=boxapp&id=<?php echo $_GET['id']; ?>">
                  
             <table border="1" width="100%" cellpadding="5">
