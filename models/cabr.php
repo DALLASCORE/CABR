@@ -80,7 +80,7 @@ function monter_get($link, $id){
 
 function commbox_getw($link, $id){
     //Запрос
-    $query=sprintf("SELECT commbox.id, number, address, note, firstname, secondname, ltunum, commbox.id_ltu, commbox.id_monter,  phone FROM `commbox` 
+    $query=sprintf("SELECT commbox.id, number, type, address, note, firstname, secondname, ltunum, commbox.id_ltu, commbox.id_monter,  phone FROM `commbox` 
 left join `info_cabr` on commbox.id_monter=info_cabr.id 
 left join `ltu` on commbox.id_ltu=ltu.id
 where commbox.id=%d",(int)$id);
@@ -103,7 +103,7 @@ where commbox.id=%d",(int)$id);
 }
 function commbox_get($link, $id_monter, $id_ltu){
     //Запрос
-    $query=sprintf("SELECT commbox.id, name_lost, number, address, type, note, firstname, phone, ltunum FROM `commbox` 
+    $query=sprintf("SELECT commbox.id, name_lost, ltu_lost, number, address, type, note, firstname, phone, ltunum FROM `commbox` 
     left join `info_cabr` on commbox.id_monter=info_cabr.id
     left join `ltu` on commbox.id_ltu=ltu.id 
     WHERE commbox.id_ltu='%d' or commbox.id_monter='%d'", (int)$id_ltu, (int)$id_monter);
@@ -147,28 +147,29 @@ left JOIN info_cabr on commbox.id_monter=info_cabr.id;";
 function search_commbox ($link, $query) {
     
     $query = trim($query); 
+    $query = (int)$query;
     $query = mysqli_real_escape_string($link, $query);
     $query = htmlspecialchars($query);
     if($query=="")
         return false;
             
-        $q = sprintf("SELECT number, type, address, note, firstname, secondname, phone, ltunum FROM commbox 
+        $q = sprintf("SELECT commbox.id, number, type, address, note, firstname, secondname, phone, ltunum FROM commbox 
 JOIN ltu on commbox.id_ltu=ltu.id
 JOIN info_cabr on commbox.id_monter=info_cabr.id
-where number=%s",$query);
+where number=%d",$query);
             $result = mysqli_query($link, $q);
             if (!$result) die (mysqli_error($link));
     
             if (mysqli_affected_rows($link) > 0) 
             { 
-                $monter=array();
+                $box=array();
                 for ($i=0; $i<(mysqli_num_rows($result)); $i++){
                 $row=mysqli_fetch_assoc($result);
-                $monter[]=$row;
+                $box[]=$row;
             } 
             }else 
                 {
-                    $t = "SELECT number, type, address, note, firstname, secondname, phone, ltunum FROM commbox 
+                    $t = "SELECT commbox.id, number, type, address, note, firstname, secondname, phone, ltunum FROM commbox 
 left JOIN ltu on commbox.id_ltu=ltu.id
 left JOIN info_cabr on commbox.id_monter=info_cabr.id
 WHERE number LIKE '$query%' ";
@@ -178,26 +179,27 @@ WHERE number LIKE '$query%' ";
     
                     if (mysqli_affected_rows($link) > 0) 
                         { 
-                        $monter=array();
+                        $box=array();
                         for ($i=0; $i<(mysqli_num_rows($result)); $i++){
                         $row=mysqli_fetch_assoc($result);
-                        $monter[]=$row;
+                        $box[]=$row;
                         }
                     }
                     
                 }
     
-    return $monter;
+    return $box;
 
 }
 function search_monter ($link, $query) {
     
     $query = trim($query); 
-    //$query = mysqli_real_escape_string($link, $query);
-    //$query = htmlspecialchars($query);
+    $query = mysqli_real_escape_string($link, $query);
+    $query = htmlspecialchars($query);
     if($query=="")
         return false;
-            $q =    "SELECT info_cabr.id, firstname, secondname, phone, ltunum FROM info_cabr Join ltu on info_cabr.id_ltu=ltu.id WHERE firstname LIKE '$query%' or  secondname LIKE '$query%' ";
+            $q =    "SELECT info_cabr.id, firstname, secondname, phone, ltunum FROM info_cabr 
+            left Join ltu on info_cabr.id_ltu=ltu.id WHERE firstname LIKE '$query%' or  secondname LIKE '$query%' ";
             $result = mysqli_query($link, $q);
             if (!$result) die (mysqli_error($link));
     
@@ -410,11 +412,44 @@ function box_edit($link, $id, $number, $address, $note, $id_monter, $id_ltu){
                         
                         return mysqli_affected_rows($link);
                     
+}
+function box_app($link, $id_commbox, $id_monter, $id_ltu){
+    
+                $id_commbox=(int)$id_commbox;
+                $id_monter=(int)$id_monter;
+                $id_ltu=(int)$id_ltu;
+                        if (!empty($id_monter)&&!empty($id_ltu))
+                        {
+                                $query="UPDATE `commbox` SET id_monter='$id_monter', id_ltu='$id_ltu'  where `id` ='$id_commbox'";
+                        
+                        $result=mysqli_query($link, $query);
+                        if (!$result) die (mysqli_error($link));  
+                        }else if (empty($id_monter) && !empty($id_ltu))
+                        {
+                             $query="UPDATE `commbox` SET id_ltu='$id_ltu'  where `id` ='$id_commbox'";
+                        
+                        $result=mysqli_query($link, $query);
+                        if (!$result) die (mysqli_error($link));  
+                            
+                        }else if (empty($id_ltu)&&!empty($id_monter))
+                        {
+                             $query="UPDATE `commbox` SET id_monter='$id_monter'  where `id` ='$id_commbox'";
+                        
+                        $result=mysqli_query($link, $query);
+                        if (!$result) die (mysqli_error($link)); 
                         }
-
-function box_clear($link, $id) {
+                        return mysqli_affected_rows($link);
+                                           
+}
+function box_clear($link, $id, $firstname, $ltu) {
+        $firstname = trim($firstname); 
+        $firstname = mysqli_real_escape_string($link, $firstname);
+        $firstname = htmlspecialchars($firstname);
+        $ltu = trim($ltu); 
+        $ltu = mysqli_real_escape_string($link, $ltu);
+        $ltu = htmlspecialchars($ltu);
         $id=(int)$id;
-        $query="UPDATE `commbox` SET `id_monter` = '', `id_ltu`='' WHERE `commbox`.`id` = '$id' ";
+        $query="UPDATE `commbox` SET `id_monter` = '', `id_ltu`='', `name_lost`='$firstname', `ltu_lost`='$ltu' WHERE `commbox`.`id` = '$id' ";
         $result=mysqli_query($link, $query);
         if (!$result) die(mysqli_error($link));
     return true;

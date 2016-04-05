@@ -48,8 +48,9 @@
                     <td><?=$a['operator']?></td>
                     <td><?=$a['phone']?></td>
                     <td><?=$a['ltunum']?></td>
-                    <td><a href="../box.php?id=<?=$a['id']?>">ШКАФЫ</a></td>
-                    <td><a href="index.php?action=monterdel&id=<?php echo $a['id']; ?>">delete</td><td><a href="index.php?action=monteredit&id=<?php echo $a['id']; ?>">edit</td>
+                    <td><a href="index.php?action=boxmontershow&id=<?=$a['id']?>">ШКАФЫ</a></td>
+                    <td><a href="index.php?action=monterdel&id=<?php echo $a['id']; ?>">delete</a></td>
+                    <td><a href="index.php?action=monteredit&id=<?php echo $a['id']; ?>">edit</a></td>
                         
                     
                 </tr>
@@ -58,7 +59,7 @@
             </table>
         </div>
     </div> 
-    <footer>
+    <footer,,,
     <p>ЦАБР<br>Copyright
         &copy; 2015</p>
     </footer>

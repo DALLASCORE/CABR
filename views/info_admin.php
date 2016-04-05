@@ -14,8 +14,8 @@
         <div align="right"><?php echo $user['name'];?>  <?php echo $user['secondname']; ?></div>
         <div align="right">IP адрес<?php echo $_SERVER['REMOTE_ADDR']; ?></div>
         <div align="right">Online пользователей <?php echo $login_users; ?></div>
-        <div align="right"><a href="auth/exit.php">Выйти</a></div>
-              <form name="search" method="post" action="../search.php">
+        <div align="right"><a href="../auth/exit.php">Выйти</a></div>
+              <form name="search" method="post" action="index.php?action=search">
             <input type="search" name="query" placeholder="Номер шкафа">
                  <input type="search" name="address" placeholder="Улица"><br>
                 <button type="submit">Найти</button> 
@@ -30,6 +30,8 @@
                         <a href="index.php?action=boxedit">Изменить данные шкафа</a><br>
                         <a href="index.php?action=boxdel">Удалить шкаф</a><br>
                         <a href="index.php?action=boxnull">Неназначенные шкафы</a><br>
+                        <a href="index.php?action=stats">Статистика посещений</a><br>
+                        <a href="index.php?action=useradd">Добавить нового пользователя</a><br>
         </div>
     </div> 
         <footer>

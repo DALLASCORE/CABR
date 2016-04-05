@@ -46,7 +46,7 @@
         <input type="submit" value="Сохранить" class="btn">
         <input type="reset" name="Reset" value="Очистить форму" class="btn">
     </form>
-            
+            <a href="index.php?action=boxapp&id=<?php echo $_GET['id']; ?>">Назначить шкаф</a>
         </div>
          <footer><br><br>
     <p>Мой первый блог<br>Copyright

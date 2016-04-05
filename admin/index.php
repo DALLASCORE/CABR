@@ -82,6 +82,31 @@
                         } 
         }
 
+        else if ($action=="boxshow") 
+            {
+                if (isset($_GET['id'])) 
+                    {
+                            $commbox=commbox_getw($link, $_GET['id']);
+                            if (isset($commbox)) 
+                                    {
+                                            include("../views/commbox.php");
+                                    } else 
+                                            include("../views/nobox.php"); 
+                }
+            
+    }
+        
+        else if ($action=="boxmontershow")     
+            {
+                $commbox=commbox_get($link, $_GET['id']);
+            if (gettype($commbox)=="array") 
+                {
+                        include("../views/commbox.php"); 
+                } else 
+        include("../views/nobox.php"); 
+            
+    }
+    
         else if ($action=="boxadd") 
             {
                            if(!empty($_POST))
@@ -96,7 +121,50 @@
                     $ltu=ltu($link); 
                     include("views/box_admin.php");   
     }
-
+        
+        else if ($action=="boxapp") 
+            {
+                        $a=(int)$_GET['id'];
+                        $id_box=$_POST['id_box'];
+                        if (!empty($id_box)) {
+                            
+                            if (isset($_POST['id_monter']) and !empty($_POST['id_monter']))
+                                {
+                                    $n=count($id_box);
+                                    for ($i=0; $i<$n; $i++)
+                                        {
+                                            box_app($link, $id_box[$i], $_POST['id_monter'], $_POST['id_ltu']); 
+                                        }
+                                }
+                                    else if (isset($_POST['id_ltu']) and !empty($_POST['id_ltu']))
+                                    {
+                                    $n=count($id_box);
+                                    for ($i=0; $i<$n; $i++)
+                                        {
+                                            box_app($link, $id_box[$i], $_POST['id_monter'], $_POST['id_ltu']); 
+                                        }
+                                    } else if (isset($a) && !empty($a)) 
+                                    {
+                                        $n=count($id_box);
+                                                for ($i=0; $i<$n; $i++)
+                                                    {
+                                                        box_app($link, $id_box[$i], $a, $_POST['id_ltu']); 
+                                                    } 
+                                    }else  header ("Location:index.php?action=boxnull"); 
+                            
+                            header ("Location:index.php?action=boxnull"); 
+                            
+                        } else       
+                { 
+                        $id=0;
+                        $id_ltu=0;
+                        $box=commbox_get($link, $id, $id_ltu);
+                        $monters=monters($link);
+                        $ltu=ltu($link); 
+                        include("../views/output_commbox.php");
+                    }
+        }
+        
         else if ($action=="boxdel") 
             {
             $box=box($link);
@@ -117,6 +185,8 @@
                         $id_ltu=0;
                         $a=$_GET['action'];
                         $box=commbox_get($link, $id, $id_ltu);
+                        $ltu=ltu($link);
+                        $monters=monters($link);
                         include("../views/output_commbox.php");
                     }
         
@@ -166,13 +236,49 @@
                             else 
                             {
                                 
-                                    $id=(int)$_GET['id'];                                
-                                    $b=box_clear($link, $id);
+                                    $id=(int)$_GET['id']; 
+                                    $firstname=$_GET['name'];
+                                    $ltu=$_GET['ltu'];
+                                    $b=box_clear($link, $id, $firstname, $ltu);
                                     header ("Location:index.php?action=boxedit&id=$id ");
                                     }
                        
                         } 
+
+        else if ($action=="search") 
+        {
+            $query=trim($_POST['query']);
+            $address=trim($_POST['address']);
+            
+            if ($query==""){
         
+                if($address==""){
+                    header("Location: index.php");  
+        }           else if($monter=search_address($link, $address)) {
+                    include("../views/output_address.php");
+                        }
+            else 
+            {
+            $commbox="По вашему запросу нечего не найдено.<br>Убедитесь в правильности вводимых данных";
+            include("../views/nobox.php");
+            }  
+            }else if(ctype_space($query)){
+                $commbox="Пустой запрос";
+                    include("views/nobox.php");  
+            }else if (!is_numeric($query)){
+                if($monter=search_monter ($link, $query)) {
+                    include("../views/output_monter.php");
+            }else {
+            $commbox="По вашему запросу нечего не найдено.<br>Убедитесь в правильности вводимых данных";
+            include("../views/nobox.php");
+            }
+    }           else if($box=search_commbox($link, $query)){
+                include("../views/output_commbox.php"); 
+        }else {
+            $commbox="По вашему запросу нечего не найдено.<br>Убедитесь в правильности вводимых данных";
+            include("../views/nobox.php");
+        }
+            }
                       
      else
         

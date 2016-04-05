@@ -65,12 +65,13 @@
             Участок <?php  echo $box['ltunum']; ?><br>  
             Монтер <?php  echo $box['firstname'];?> <?php  echo $box['secondname']; ?><br>
             <a href="index.php?action=boxdel&id=<?php echo $box['id']; ?>">удалить</a><br>
-            <a href="index.php?action=boxclear&id=<?php echo $box['id']; ?>">освободить</a><br>
+            <a href="index.php?action=boxclear&id=<?php echo $box['id']; ?>&name=<?php echo $box['firstname']; ?>&ltu=<?php echo $box['ltunum']; ?>">освободить</a><br>
         </div>
          <footer><br><br>
     <p>Мой первый блог<br>Copyright
         &copy; 2015</p>
     </footer>
+        
 </body>
 
 </html>

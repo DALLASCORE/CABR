@@ -8,7 +8,7 @@
     </head>
 <body>
     <div class="container">
-        <?php $i=1 ?>
+        <?php $i=0 ?>
         <h1><a href="index.php">ЦАБР</a></h1>
           <form name="search" method="post" action="search.php">
             <input type="search" name="query" placeholder="Поиск шкафа или монтера">
@@ -25,6 +25,8 @@
                         <th>ТИП</th>
                         <th>АДРЕСС</th>
                         <th>ПРИМЕЧАНИЕ</th>
+                        <th>Фамилия</th>
+                        <th>Имя</th>
                 </tr>
                 <tr>
             <?php foreach($commbox as $a): ?>
@@ -36,10 +38,13 @@
                         };
                         ?>
                     </td>
-                    <td><?=$a['number']?></td>
+                    <td><a href="index.php?action=boxshow&id=<?php echo $a['id']; ?>"><?=$a['number']?></a></td>
                     <td><?=$a['type']?></td>
                     <td><?=$a['address']?></td> 
                     <td><?=$a['note']?></td>
+                    <td><?=$a['firstname']?></td>
+                    <td><?=$commbox['secondname']?></td>
+                    
                 </tr>
                     <?php endforeach ?> 
                 </div>
