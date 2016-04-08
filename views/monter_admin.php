@@ -36,7 +36,7 @@
         
         <label>
             Участок<br>     
-            <select class="form-item" name="id_ltu" size=1>
+            <select class="form-item" name="id_ltu"  size=1>
                  <?php foreach($ltu as $a): ?>   
             <option value="<?=$a['id'] ?>"><?=$a['ltunum'] ?></option> 
              <?php endforeach ?> 
@@ -46,7 +46,7 @@
         <input type="submit" value="Сохранить" class="btn">
         <input type="reset" name="Reset" value="Очистить форму" class="btn">
     </form>
-            <a href="index.php?action=boxapp&id=<?php echo $_GET['id']; ?>">Назначить шкаф</a>
+            <a href="#" ONCLICK="window.open('index.php?action=boxapp&id=<?php echo $_GET['id']; ?> ','','Toolbar=0,Location=0,Directories=0,Status=0,Menubar=0,Scrollbars=0,Resizable=0,Width=1000,Height=600');">Назначить шкаф</a>
         </div>
          <footer><br><br>
     <p>Мой первый блог<br>Copyright
