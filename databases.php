@@ -1,7 +1,7 @@
 <?php
 define('MYSQL_SERVER', 'localhost');
 define('MYSQL_USER', 'root');
-define('MYSQL_PASSWORD', 'coredallas89');
+define('MYSQL_PASSWORD', '');
 define('MYSQL_DB', 'cabr');
 
 function db_connect(){
