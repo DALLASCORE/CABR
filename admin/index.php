@@ -279,7 +279,27 @@
             include("../views/nobox.php");
         }
             }
-                      
+        
+        else if ($action=="select") 
+        {
+            switch ($_POST['post']){
+                
+            case "showMonterForInsert":
+                echo '<label>Монтер<br>';
+                echo '<select size="1" class="form-item" name="id_monter">';
+                $rows = monters_all($link, $_POST['id_ltu']);
+                foreach ($rows as $numRow => $row) 
+                    {
+                        echo ('<option value="'.$row['id'].'">'.$row['firstname'].'  '.$row['secondname'].'</option>');
+                    };
+                echo '</select></label><br>';
+                break;
+                
+       
+        
+};
+
+        }
      else
         
         include ("../views/info_admin.php"); 
