@@ -3,6 +3,26 @@
     <head>
         <meta charset="utf-8">
         <title>ЦАБР</title>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+        <script type="text/javascript" > 
+        function selectMonter(){
+        var ltu = $('select[name="id_ltu"]').val();
+        if(!ltu) {
+                $('div[name="selectMonter"]').html('');
+        }else{
+                $.ajax({
+                        type: "POST",
+                        url: "index.php?action=select",
+                        data: { post: 'showMonterForInsert', id_ltu: ltu },
+                        cache: false,
+                        success: function(responce){ $('div[name="selectMonter"]').html(responce); }
+                    });
+                };
+            };   
+        </script>
+        
+        
         <link rel="stylesheet" href="style.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
     </head>
@@ -34,8 +54,9 @@
              </label><br>
             
                 <label>
-            Участок<br>     
-            <select class="form-item" name="id_ltu" size=1>
+            Участок<br>  
+                    
+            <select class="form-item" name="id_ltu" size=1 onchange="javascript:selectMonter()"  >
                     <option selected value = ""></option>
             <?php foreach($ltu as $a): ?>   
                     <option value="<?=$a['id'] ?>"><?=$a['ltunum'] ?></option> 
@@ -43,20 +64,10 @@
                  </select>
         </label><br>
                     
-        <label>
-            Монтер<br>     
-            <select class="form-item" name="id_monter" size=1>
-                    <option selected value = ""></option>
-                            <?php foreach($monters as $b): ?>   
-                    <option value="<?=$b['id'] ?>"><?=$b['firstname'] ?></option> 
-                            <?php endforeach ?> 
-            </select>
-        </label><br>
-        
-        
-        
-        <input type="submit" value="Сохранить" class="btn">
-        <input type="reset" name="Reset" value="Очистить форму" class="btn">
+                <div  name="selectMonter"></div>
+
+        <input type="submit" value="Сохранить" class="btn"><br>
+        <br><input type="reset" name="Reset" value="Очистить форму" class="btn">
     </form> <br>
             
             Номер: <?php  echo $box['number']; ?><br>
