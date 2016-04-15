@@ -62,8 +62,9 @@
             <select class="form-item" name="id_ltu" size=1 onchange="javascript:selectMonter()"  >
                     <option selected value = ""></option>
             <?php foreach($ltu as $a): ?>  
+                <?php if ($a['ltunum']=='ЛТУ1' || $a['ltunum']=='ЛТУ2') { ?>
                     <option value="<?=$a['id'] ?>"><?=$a['ltunum'] ?></option> 
-             <?php endforeach ?> 
+             <?php } endforeach ?> 
                  </select>
         </label><br>
                 
