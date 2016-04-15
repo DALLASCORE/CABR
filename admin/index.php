@@ -117,7 +117,7 @@
                    }
                     else header("Location: index.php");
             }   
-                    $monters=monters($link);
+                    
                     $ltu=ltu($link); 
                     include("views/box_admin.php");   
     }
@@ -290,6 +290,7 @@
                      sleep (2);
                 echo '<label>Монтер<br>';
                 echo '<select size="1" class="form-item" name="id_monter">';
+                echo '<option value=""></option>';
                 $rows = monters_all($link, $_POST['id_ltu']);
                 foreach ($rows as $numRow => $row) 
                     {
