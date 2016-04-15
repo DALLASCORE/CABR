@@ -195,6 +195,8 @@
                     
                     if (!isset($_GET['id']) or empty($_GET['id'])) 
                         {
+                        $ltu=ltu($link);
+                        $monters=monters($link);
                         $box=box($link);
                         include("../views/output_commbox.php");
                         }
@@ -285,6 +287,7 @@
             switch ($_POST['post']){
                 
             case "showMonterForInsert":
+                     sleep (2);
                 echo '<label>Монтер<br>';
                 echo '<select size="1" class="form-item" name="id_monter">';
                 $rows = monters_all($link, $_POST['id_ltu']);
@@ -294,8 +297,6 @@
                     };
                 echo '</select></label><br>';
                 break;
-                
-       
         
 };
 
