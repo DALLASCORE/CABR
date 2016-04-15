@@ -16,6 +16,9 @@
                         url: "index.php?action=select",
                         data: { post: 'showMonterForInsert', id_ltu: ltu },
                         cache: false,
+                        beforeSend: function () {
+                        $('div[name="selectMonter"]').text ("Ожидание данных...."); 
+                        }, 
                         success: function(responce){ $('div[name="selectMonter"]').html(responce); }
                     });
                 };
@@ -58,14 +61,15 @@
                     
             <select class="form-item" name="id_ltu" size=1 onchange="javascript:selectMonter()"  >
                     <option selected value = ""></option>
-            <?php foreach($ltu as $a): ?>   
+            <?php foreach($ltu as $a): ?>  
                     <option value="<?=$a['id'] ?>"><?=$a['ltunum'] ?></option> 
              <?php endforeach ?> 
                  </select>
         </label><br>
-                    
-                <div  name="selectMonter"></div>
-
+                
+             
+                <div  id="information" name="selectMonter"></div>
+                
         <input type="submit" value="Сохранить" class="btn"><br>
         <br><input type="reset" name="Reset" value="Очистить форму" class="btn">
     </form> <br>
